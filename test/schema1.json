@@ -1,0 +1,59 @@
+{
+  "title": "Schema",
+  "type": "object",
+  "properties": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "age": {
+      "type": "number"
+    },
+    "hairColor": {
+      "enum": [
+        {
+          "title": "头发颜色1",
+          "value": "color1"
+        },
+        {
+          "title": "头发颜色2",
+          "value": "color2"
+        }
+      ],
+      "type": "string"
+    },
+    "arr": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "arr1": {
+            "type": "string"
+          },
+          "arr2": {
+            "type": "number"
+          },
+          "arr3": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "enen1": {
+                  "type": "string"
+                },
+                "enen2": {
+                  "type": "number"
+                },
+                "enen3": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
