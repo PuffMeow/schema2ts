@@ -14,7 +14,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^18.14.1",
     "prettier": "2.8.4",
+    "vite": "^4.1.4",
     "vitest": "^0.29.1"
   }
 }

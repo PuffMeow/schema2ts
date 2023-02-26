@@ -1,11 +1,11 @@
 export function transformer(schema: string | Record<string, any>): string {
   let schemaToTransform: string | Record<string, any> = schema;
-  if (typeof schemaToTransform === "string") {
+  if (typeof schemaToTransform === 'string') {
     try {
       schemaToTransform = JSON.parse(schemaToTransform);
     } catch (e) {
       console.error(`Transform Error: ${e}`);
-      return "";
+      return '';
     }
   }
 
@@ -13,5 +13,5 @@ export function transformer(schema: string | Record<string, any>): string {
 }
 
 function schema2ts(schema: Record<string, any>): string {
-  return "";
+  return '';
 }
