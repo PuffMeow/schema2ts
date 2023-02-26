@@ -1,7 +1,7 @@
 {
   "name": "schema-ts",
   "version": "0.0.1",
-  "description": "Transform JSON schema to Typescript interface",
+  "description": "Transform JSON Schema to Typescript interface",
   "main": "index.js",
   "files": [
     "./dist/index.js"
