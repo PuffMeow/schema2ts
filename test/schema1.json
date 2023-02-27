@@ -24,6 +24,20 @@
       ],
       "type": "string"
     },
+    "obj": {
+      "type": "object",
+      "properties": {
+        "key1": {
+          "type": "string"
+        },
+        "key2": {
+          "type": "number"
+        },
+        "key3": {
+          "type": "boolean"
+        }
+      }
+    },
     "arr": {
       "type": "array",
       "items": {

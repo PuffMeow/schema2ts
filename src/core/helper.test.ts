@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'vitest';
-import { getEnumType, toCapatical } from './helper';
+import { getEnumType, capitalize } from './helper';
 
 describe('helper test', () => {
   test('should uppercase the first letter', () => {
-    expect(toCapatical('hello world')).toBe('Hello world');
+    expect(capitalize('hello world')).toBe('Hello world');
   });
 
   test('should filter enum when miss the value', () => {
@@ -19,7 +19,7 @@ describe('helper test', () => {
           title: 'test enum3',
         },
       ]),
-    ).toBe("");
+    ).toBe('');
 
     expect(
       getEnumType([

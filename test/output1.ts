@@ -1,4 +1,4 @@
-export type THairColor = "color1" | "color2";
+export type THairColor = 'color1' | 'color2';
 
 export interface ISchema {
   firstName?: string;
@@ -6,6 +6,7 @@ export interface ISchema {
   age?: number;
   hairColor?: THairColor;
   arr?: IArr[];
+  obj?: IObj;
 }
 
 export interface IArr {
@@ -18,4 +19,10 @@ export interface IArr3 {
   enen1?: string;
   enen2?: number;
   enen3?: boolean;
+}
+
+export interface IObj {
+  key1?: string;
+  key2?: number;
+  key3?: boolean;
 }
