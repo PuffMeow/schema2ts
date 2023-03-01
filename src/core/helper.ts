@@ -1,7 +1,7 @@
 import { IEnumType } from './types';
 
 /** Make the first letter uppercase */
-export function capitalize(str: string) {
+export function capitalize(str = '') {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
