@@ -1,3 +1,3 @@
-import { transformer } from "./core";
+import { schema2ts } from "./core";
 
-export default transformer;
+export default schema2ts;

@@ -5,8 +5,14 @@ export interface ISchema {
   lastName?: string;
   age?: number;
   hairColor?: THairColor;
-  arr?: IArr[];
   obj?: IObj;
+  arr?: IArr[];
+}
+
+export interface IObj {
+  key1?: string;
+  key2?: number;
+  key3?: boolean;
 }
 
 export interface IArr {
@@ -19,10 +25,4 @@ export interface IArr3 {
   enen1?: string;
   enen2?: number;
   enen3?: boolean;
-}
-
-export interface IObj {
-  key1?: string;
-  key2?: number;
-  key3?: boolean;
 }

@@ -8,7 +8,11 @@ interface IJsonSchema {
   enum?: { title?: string; value: string }[];
 }
 
-export function schema2ts(schema: string): string {
+interface IOptions {
+  explain?: string;
+}
+
+export function schema2ts(schema: string, options?: IOptions): string {
   const jsonSchema: IJsonSchema = JSON.parse(schema);
   const interfaces: string[] = [];
   const cacheTypeName = new Set<string>();
@@ -94,8 +98,9 @@ export function schema2ts(schema: string): string {
 
   generateTypes(jsonSchema);
 
-  const explain = `/** 该文件由类型生成器自动生成，请不要手动修改 */`;
-  interfaces.unshift(explain);
+  if (options?.explain) {
+    interfaces.unshift(options.explain);
+  }
 
   return interfaces.join('\n');
 }
