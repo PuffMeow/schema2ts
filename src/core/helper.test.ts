@@ -1,9 +1,13 @@
 import { describe, expect, test } from 'vitest';
-import { getEnumType, capitalize } from './helper';
+import { getEnumType, capitalize, getIndent } from './helper';
 
 describe('helper test', () => {
   test('should uppercase the first letter', () => {
     expect(capitalize('hello world')).toBe('Hello world');
+  });
+
+  test('empty enums', () => {
+    expect(getEnumType([])).toBe('');
   });
 
   test('should filter enum when miss the value', () => {
@@ -70,5 +74,9 @@ describe('helper test', () => {
         },
       ]),
     ).toBe("'enum1' | 'enum2' | 'enum3'");
+  });
+
+  test('should get a right indent', () => {
+    expect(getIndent(2)).toBe('  ')
   });
 });

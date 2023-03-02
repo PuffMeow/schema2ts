@@ -1,10 +1,11 @@
-import { IEnumType } from './types';
+import { IEnumType } from './types/schema2ts';
 
 /** Make the first letter uppercase */
 export function capitalize(str = '') {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+/** Generate enum type */
 export function getEnumType(enumVals: IEnumType[]) {
   const enums = Object.values(enumVals);
   let result = '';
@@ -25,4 +26,18 @@ export function getEnumType(enumVals: IEnumType[]) {
   }
 
   return result;
+}
+
+/** Handle code indent */
+export function getIndent(indent: number) {
+  return ''.padStart(indent, ' ');
+}
+
+export function parseJson(schema: string) {
+  try {
+    return JSON.parse(schema);
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
 }

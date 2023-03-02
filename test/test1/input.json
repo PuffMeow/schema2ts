@@ -20,6 +20,10 @@
         {
           "title": "头发颜色2",
           "value": "color2"
+        },
+        {
+          "title": "头发颜色3",
+          "value": "color3"
         }
       ],
       "type": "string"
