@@ -1,4 +1,4 @@
-import { IEnumType } from './types/schema2ts';
+import type { IEnumType, IJsonSchema } from '../types/schema2ts';
 
 /** Make the first letter uppercase */
 export function capitalize(str = '') {
@@ -40,4 +40,20 @@ export function parseJson(schema: string) {
     console.error(e);
     return null;
   }
+}
+
+export function generateComment(schema: IJsonSchema, indent: number) {
+  let comment = '';
+  if (schema.title) {
+    comment += schema.title;
+  }
+  if (schema.description) {
+    comment += `(${schema.description})`;
+  }
+
+  if (comment.length > 0) {
+    return `${getIndent(indent)}/** ${comment} */\n`;
+  }
+
+  return '';
 }

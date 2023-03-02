@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { getEnumType, capitalize, getIndent } from './helper';
+import { getEnumType, capitalize, getIndent } from './index';
 
 describe('helper test', () => {
   test('should uppercase the first letter', () => {

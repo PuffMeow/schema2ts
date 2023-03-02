@@ -1,12 +1,18 @@
 import { defaultOptions } from './default';
-import { capitalize, getEnumType, getIndent, parseJson } from './helper';
+import {
+  capitalize,
+  generateComment,
+  getEnumType,
+  getIndent,
+  parseJson,
+} from './utils';
 import type { IJsonSchema, IOptions } from './types/schema2ts';
 
 export function schema2ts(schema: string, options?: IOptions) {
   const opts = { ...defaultOptions, ...options } as Required<IOptions>;
   const jsonSchema: IJsonSchema = parseJson(schema);
 
-  if (!jsonSchema) return '// Parse schema error, please check your schema.';
+  if (!jsonSchema) return opts.parseErrorMessage;
 
   const interfaces: string[] = [];
   const cacheTypeName = new Set<string>();
@@ -38,11 +44,15 @@ export function schema2ts(schema: string, options?: IOptions) {
     schema: IJsonSchema,
     name: string = 'Schema',
   ) => {
-    let interfaceStr = `export interface I${capitalize(name)} {\n`;
+    let interfaceStr = '';
+    interfaceStr = `export interface I${capitalize(name)} {\n`;
 
     for (const key in schema.properties) {
       const prop = schema.properties[key];
       const type = getType(prop, key);
+      if (opts.isGenComment) {
+        interfaceStr += generateComment(prop, opts.indent);
+      }
       interfaceStr += `${getIndent(opts.indent)}${key}?: ${type};\n`;
     }
 
@@ -63,6 +73,7 @@ export function schema2ts(schema: string, options?: IOptions) {
     const interfaceName = generateRootInterface(schema, key);
 
     if (!cacheTypeName.has(interfaceName)) {
+      // TODO: 添加缓存的时候记得把注释删掉
       cacheTypeName.add(interfaceName);
       interfaces.push(interfaceName);
     }
@@ -105,3 +116,87 @@ export function schema2ts(schema: string, options?: IOptions) {
 
   return output;
 }
+
+console.log(
+  schema2ts(`{
+  "title": "Schema",
+  "type": "object",
+  "properties": {
+    "firstName": {
+      "title": "第一名",
+      "type": "string"
+    },
+    "lastName": {
+      "title": "第二名",
+      "type": "string"
+    },
+    "age": {
+      "title": "年龄",
+      "type": "number"
+    },
+    "hairColor": {
+      "enum": [
+        {
+          "title": "头发颜色1",
+          "value": "color1"
+        },
+        {
+          "title": "头发颜色2",
+          "value": "color2"
+        },
+        {
+          "title": "头发颜色3",
+          "value": "color3"
+        }
+      ],
+      "type": "string"
+    },
+    "obj": {
+      "type": "object",
+      "properties": {
+        "key1": {
+          "type": "string"
+        },
+        "key2": {
+          "type": "number"
+        },
+        "key3": {
+          "type": "boolean"
+        }
+      }
+    },
+    "arr": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "arr1": {
+            "type": "string"
+          },
+          "arr2": {
+            "type": "number"
+          },
+          "arr3": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "enen1": {
+                  "type": "string"
+                },
+                "enen2": {
+                  "type": "number"
+                },
+                "enen3": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`),
+);
