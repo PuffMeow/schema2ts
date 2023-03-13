@@ -14,15 +14,15 @@
     "hairColor": {
       "enum": [
         {
-          "title": "头发颜色1",
+          "title": "hair color1",
           "value": "color1"
         },
         {
-          "title": "头发颜色2",
+          "title": "hair color2",
           "value": "color2"
         },
         {
-          "title": "头发颜色3",
+          "title": "hair color3",
           "value": "color3"
         }
       ],

@@ -42,13 +42,26 @@ export function parseJson(schema: string) {
   }
 }
 
-export function generateComment(schema: IJsonSchema, indent: number) {
+export function generateComment(schema: IJsonSchema, indent = 2) {
   let comment = '';
-  if (schema.title) {
-    comment += schema.title;
-  }
-  if (schema.description) {
-    comment += `(${schema.description})`;
+
+  if (schema.type === 'array' || schema.items) {
+    if (schema.title) {
+      comment += schema.title;
+    }
+    if (schema.items?.title) {
+      comment += ` ${schema.items.title}`;
+    }
+    if (schema.items?.description) {
+      comment += ` (${schema.description})`;
+    }
+  } else {
+    if (schema.title) {
+      comment += schema.title;
+    }
+    if (schema.description) {
+      comment += ` (${schema.description})`;
+    }
   }
 
   if (comment.length > 0) {
@@ -56,4 +69,14 @@ export function generateComment(schema: IJsonSchema, indent: number) {
   }
 
   return '';
+}
+
+export function removeComment(interfaceStr = '') {
+  return interfaceStr
+    .split('\n')
+    .map((line) => {
+      return line.replace(/\s*\/\*\*(.*?)\*\/\s*/, '');
+    })
+    .filter((v) => v.length > 0)
+    .join('\n');
 }

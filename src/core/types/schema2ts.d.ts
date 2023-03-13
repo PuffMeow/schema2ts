@@ -7,6 +7,8 @@ interface IOptions {
   isGenComment?: boolean;
   indent?: number;
   semi?: boolean;
+  /** If this is enabled, it will generate the optional interface */
+  optional?: boolean;
 }
 
 export interface IJsonSchema {

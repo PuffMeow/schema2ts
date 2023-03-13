@@ -1,5 +1,11 @@
 import { describe, expect, test } from 'vitest';
-import { getEnumType, capitalize, getIndent } from './index';
+import {
+  getEnumType,
+  capitalize,
+  getIndent,
+  generateComment,
+  removeComment,
+} from './index';
 
 describe('helper test', () => {
   test('should uppercase the first letter', () => {
@@ -77,6 +83,23 @@ describe('helper test', () => {
   });
 
   test('should get a right indent', () => {
-    expect(getIndent(2)).toBe('  ')
+    expect(getIndent(2)).toBe('  ');
+  });
+
+  test('should generate comment correctly', () => {
+    expect(
+      generateComment({
+        type: 'array',
+        title: 'test arr3',
+        items: {
+          type: 'object',
+          title: 'test arr3 items',
+        },
+      }),
+    ).toBe(`  /** test arr3 test arr3 items */\n`);
+  });
+
+  test('should remove comment', () => {
+    expect(removeComment(`  /** test arr3 test arr3 items */\n`)).toBe('');
   });
 });

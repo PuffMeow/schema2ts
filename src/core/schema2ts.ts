@@ -5,6 +5,7 @@ import {
   getEnumType,
   getIndent,
   parseJson,
+  removeComment,
 } from './utils';
 import type { IJsonSchema, IOptions } from './types/schema2ts';
 
@@ -50,10 +51,12 @@ export function schema2ts(schema: string, options?: IOptions) {
     for (const key in schema.properties) {
       const prop = schema.properties[key];
       const type = getType(prop, key);
+      // generate comment
       if (opts.isGenComment) {
         interfaceStr += generateComment(prop, opts.indent);
       }
-      interfaceStr += `${getIndent(opts.indent)}${key}?: ${type};\n`;
+      const optionalSymbol = opts.optional ? '?' : ''
+      interfaceStr += `${getIndent(opts.indent)}${key}${optionalSymbol}: ${type};\n`;
     }
 
     interfaceStr += `}\n`;
@@ -70,12 +73,16 @@ export function schema2ts(schema: string, options?: IOptions) {
     schema: IJsonSchema,
     key: string = 'Schema',
   ) => {
-    const interfaceName = generateRootInterface(schema, key);
+    let interfaceStr = generateRootInterface(schema, key);
 
-    if (!cacheTypeName.has(interfaceName)) {
-      // TODO: 添加缓存的时候记得把注释删掉
-      cacheTypeName.add(interfaceName);
-      interfaces.push(interfaceName);
+    if (!cacheTypeName.has(interfaceStr)) {
+      // remove the comment when caching
+      if (opts?.isGenComment) {
+        interfaceStr = removeComment(interfaceStr);
+      }
+      cacheTypeName.add(interfaceStr);
+
+      interfaces.push(interfaceStr);
     }
 
     for (const key in schema.properties) {
@@ -135,6 +142,7 @@ console.log(
       "type": "number"
     },
     "hairColor": {
+      "title": "头发颜色",
       "enum": [
         {
           "title": "头发颜色1",
@@ -153,35 +161,46 @@ console.log(
     },
     "obj": {
       "type": "object",
+      "title": "对象测试",
       "properties": {
         "key1": {
+          "title": "key1",
           "type": "string"
         },
         "key2": {
+          "title": "key2",
           "type": "number"
         },
         "key3": {
+          "title": "key3",
           "type": "boolean"
         }
       }
     },
     "arr": {
       "type": "array",
+      "title": "数组测试",
       "items": {
         "type": "object",
+        "title": "嵌套数组",
         "properties": {
           "arr1": {
+            "title": "arr1",
             "type": "string"
           },
           "arr2": {
+            "title": "arr2",
             "type": "number"
           },
           "arr3": {
             "type": "array",
+            "title": "测试 arr3",
             "items": {
               "type": "object",
+              "title": "测试 arr3 items",
               "properties": {
                 "enen1": {
+                  "title": "嗯嗯1",
                   "type": "string"
                 },
                 "enen2": {
