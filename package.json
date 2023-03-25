@@ -1,16 +1,16 @@
 {
   "name": "@puffmeow/schema2ts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Transform JSON Schema to Typescript interface automatically",
   "files": [
     "dist"
   ],
-  "main": "./dist/schema-ts.umd.cjs",
-  "module": "./dist/schema-ts.js",
+  "main": "./dist/src/index.umd.cjs",
+  "module": "./dist/src/index.js",
   "exports": {
     ".": {
-      "import": "./dist/schema-ts.js",
-      "require": "./dist/schema-ts.umd.cjs"
+      "import": "./dist/src/index.js",
+      "require": "./dist/src/index.umd.cjs"
     }
   },
   "type": "module",
