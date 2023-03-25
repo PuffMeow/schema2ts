@@ -1,3 +1,3 @@
-import { schema2ts } from "./core";
+import { schema2ts, IOptions } from './core';
 
-export default schema2ts;
+export { schema2ts, IOptions };

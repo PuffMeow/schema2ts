@@ -94,9 +94,21 @@ describe('helper test', () => {
         items: {
           type: 'object',
           title: 'test arr3 items',
+          description: 'test arr3 description',
         },
       }),
-    ).toBe(`  /** test arr3 test arr3 items */\n`);
+    ).toBe(`  /** test arr3 test arr3 items (test arr3 description) */\n`);
+
+    expect(
+      generateComment({
+        type: 'string',
+        title: 'test string title',
+        description: 'test string description',
+      }),
+    ).toBe(`  /** test string title (test string description) */\n`)
+
+
+    expect(generateComment({})).toBe('')
   });
 
   test('should remove comment', () => {

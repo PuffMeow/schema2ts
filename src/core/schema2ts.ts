@@ -1,6 +1,7 @@
 import { defaultOptions } from './default';
 import {
   capitalize,
+  checkIsValidTitle,
   generateComment,
   getEnumType,
   getIndent,
@@ -9,8 +10,11 @@ import {
 } from './utils';
 import type { IJsonSchema, IOptions } from './types/schema2ts';
 
+export { IOptions };
+
 export function schema2ts(schema: string, options?: IOptions) {
   const opts = { ...defaultOptions, ...options } as Required<IOptions>;
+
   const jsonSchema: IJsonSchema = parseJson(schema);
 
   if (!jsonSchema) return opts.parseErrorMessage;
@@ -41,12 +45,16 @@ export function schema2ts(schema: string, options?: IOptions) {
     }
   };
 
+  // From root object to generate
   const generateRootInterface = (
     schema: IJsonSchema,
     name: string = 'Schema',
   ) => {
     let interfaceStr = '';
-    interfaceStr = `export interface I${capitalize(name)} {\n`;
+    if (opts.isGenComment) {
+      interfaceStr += `${generateComment(schema, 0)}`;
+    }
+    interfaceStr += `export interface I${capitalize(name)} {\n`;
 
     for (const key in schema.properties) {
       const prop = schema.properties[key];
@@ -55,8 +63,10 @@ export function schema2ts(schema: string, options?: IOptions) {
       if (opts.isGenComment) {
         interfaceStr += generateComment(prop, opts.indent);
       }
-      const optionalSymbol = opts.optional ? '?' : ''
-      interfaceStr += `${getIndent(opts.indent)}${key}${optionalSymbol}: ${type};\n`;
+      const optionalSymbol = opts.optional ? '?' : '';
+      interfaceStr += `${getIndent(
+        opts.indent,
+      )}${key}${optionalSymbol}: ${type};\n`;
     }
 
     interfaceStr += `}\n`;
@@ -64,23 +74,18 @@ export function schema2ts(schema: string, options?: IOptions) {
   };
 
   const generateEnum = (schema: IJsonSchema, key: string = 'Enum') => {
-    return `export type T${capitalize(key)} = ${getEnumType(
-      schema?.enum ?? [],
-    )};\n`;
+    return `export type T${capitalize(key)} = ${getEnumType(schema.enum!)};\n`;
   };
 
-  const generateNestedInterface = (
-    schema: IJsonSchema,
-    key: string = 'Schema',
-  ) => {
+  const generateInterface = (schema: IJsonSchema, key: string = 'Schema') => {
     let interfaceStr = generateRootInterface(schema, key);
 
-    if (!cacheTypeName.has(interfaceStr)) {
-      // remove the comment when caching
-      if (opts?.isGenComment) {
-        interfaceStr = removeComment(interfaceStr);
-      }
-      cacheTypeName.add(interfaceStr);
+    const plainInterfaceStr = opts.isGenComment
+      ? removeComment(interfaceStr)
+      : interfaceStr;
+
+    if (!cacheTypeName.has(plainInterfaceStr)) {
+      cacheTypeName.add(plainInterfaceStr);
 
       interfaces.push(interfaceStr);
     }
@@ -88,7 +93,7 @@ export function schema2ts(schema: string, options?: IOptions) {
     for (const key in schema.properties) {
       const prop = schema.properties[key];
 
-      if (prop?.enum) {
+      if (prop?.enum && Array.isArray(prop.enum)) {
         const enumType = generateEnum(prop, key);
 
         // unique the enums
@@ -99,16 +104,19 @@ export function schema2ts(schema: string, options?: IOptions) {
       }
 
       if (prop.properties) {
-        generateNestedInterface(prop, capitalize(key));
+        generateInterface(prop, capitalize(key));
       }
 
       if (prop?.items?.properties) {
-        generateNestedInterface(prop.items, capitalize(key));
+        generateInterface(prop.items, capitalize(key));
       }
     }
   };
 
-  generateNestedInterface(jsonSchema);
+  generateInterface(
+    jsonSchema,
+    checkIsValidTitle(jsonSchema?.title) ? jsonSchema.title : 'Schema',
+  );
 
   if (options?.explain) {
     interfaces.unshift(options.explain);
@@ -124,98 +132,101 @@ export function schema2ts(schema: string, options?: IOptions) {
   return output;
 }
 
-console.log(
-  schema2ts(`{
-  "title": "Schema",
-  "type": "object",
-  "properties": {
-    "firstName": {
-      "title": "第一名",
-      "type": "string"
-    },
-    "lastName": {
-      "title": "第二名",
-      "type": "string"
-    },
-    "age": {
-      "title": "年龄",
-      "type": "number"
-    },
-    "hairColor": {
-      "title": "头发颜色",
-      "enum": [
-        {
-          "title": "头发颜色1",
-          "value": "color1"
-        },
-        {
-          "title": "头发颜色2",
-          "value": "color2"
-        },
-        {
-          "title": "头发颜色3",
-          "value": "color3"
-        }
-      ],
-      "type": "string"
-    },
-    "obj": {
-      "type": "object",
-      "title": "对象测试",
-      "properties": {
-        "key1": {
-          "title": "key1",
-          "type": "string"
-        },
-        "key2": {
-          "title": "key2",
-          "type": "number"
-        },
-        "key3": {
-          "title": "key3",
-          "type": "boolean"
-        }
-      }
-    },
-    "arr": {
-      "type": "array",
-      "title": "数组测试",
-      "items": {
-        "type": "object",
-        "title": "嵌套数组",
-        "properties": {
-          "arr1": {
-            "title": "arr1",
-            "type": "string"
-          },
-          "arr2": {
-            "title": "arr2",
-            "type": "number"
-          },
-          "arr3": {
-            "type": "array",
-            "title": "测试 arr3",
-            "items": {
-              "type": "object",
-              "title": "测试 arr3 items",
-              "properties": {
-                "enen1": {
-                  "title": "嗯嗯1",
-                  "type": "string"
-                },
-                "enen2": {
-                  "type": "number"
-                },
-                "enen3": {
-                  "type": "boolean"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-`),
-);
+// schema2ts(
+//   `{
+// "title": "Schema",
+// "type": "object",
+// "properties": {
+//   "firstName": {
+//     "title": "This is the first name",
+//     "type": "string"
+//   },
+//   "lastName": {
+//     "title": "This is the last name",
+//     "type": "string"
+//   },
+//   "age": {
+//     "title": "This is the age",
+//     "type": "number"
+//   },
+//   "hairColor": {
+//     "title": "This is the hair color",
+//     "enum": [
+//       {
+//         "title": "hair color1",
+//         "value": "color1"
+//       },
+//       {
+//         "title": "hair color2",
+//         "value": "color2"
+//       },
+//       {
+//         "title": "hair color3",
+//         "value": "color3"
+//       }
+//     ],
+//     "type": "string"
+//   },
+//   "obj": {
+//     "type": "object",
+//     "title": "Object test",
+//     "properties": {
+//       "key1": {
+//         "title": "This is the key1",
+//         "type": "string"
+//       },
+//       "key2": {
+//         "title": "This is the key2",
+//         "type": "number"
+//       },
+//       "key3": {
+//         "title": "This is the key3",
+//         "type": "boolean"
+//       }
+//     }
+//   },
+//   "arr": {
+//     "type": "array",
+//     "title": "Arr test",
+//     "items": {
+//       "type": "object",
+//       "title": "Nested array items",
+//       "properties": {
+//         "arr1": {
+//           "title": "This is the arr1",
+//           "type": "string"
+//         },
+//         "arr2": {
+//           "title": "This is the arr2",
+//           "type": "number"
+//         },
+//         "arr3": {
+//           "type": "array",
+//           "title": "Test arr3",
+//           "items": {
+//             "type": "object",
+//             "title": "Test nested arr3 items",
+//             "properties": {
+//               "enen1": {
+//                 "title": "This is the enen1",
+//                 "type": "string"
+//               },
+//               "enen2": {
+//                 "title": "This is the enen2",
+//                 "type": "number"
+//               },
+//               "enen3": {
+//                 "title": "This is the enen1",
+//                 "type": "boolean"
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+// }
+// `,
+//   { isGenComment: true },
+// );

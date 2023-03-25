@@ -53,7 +53,7 @@ export function generateComment(schema: IJsonSchema, indent = 2) {
       comment += ` ${schema.items.title}`;
     }
     if (schema.items?.description) {
-      comment += ` (${schema.description})`;
+      comment += ` (${schema.items?.description})`;
     }
   } else {
     if (schema.title) {
@@ -79,4 +79,9 @@ export function removeComment(interfaceStr = '') {
     })
     .filter((v) => v.length > 0)
     .join('\n');
+}
+
+export function checkIsValidTitle(str?: string) {
+  if(!str) return false;
+  return /[a-zA-Z_$]/.test(str)
 }

@@ -7,4 +7,5 @@ export const defaultOptions: IOptions = {
   isGenComment: false,
   indent: 2,
   semi: true,
+  ignoreKeys: [],
 };

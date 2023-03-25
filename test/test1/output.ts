@@ -25,4 +25,5 @@ export interface IArr3 {
   enen1?: string;
   enen2?: number;
   enen3?: boolean;
+  enen4?: any;
 }
