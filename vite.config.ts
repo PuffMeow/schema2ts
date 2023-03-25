@@ -6,8 +6,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      name: 'schema-ts',
-      fileName: 'schema-ts',
+      name: 'schema2ts',
+      fileName: 'schema2ts',
     },
   },
   plugins: [typescript()],
