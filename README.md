@@ -2,6 +2,8 @@
 
 This is a tool that can help you transform your JSON Schema to TypeScript interface quickly🧲.
 
+**1.3kb** after gzip.
+
 [Git resposity](https://github.com/PuffMeow/schema2ts). If you like it, please give me a little star♥
 
 ## Install
@@ -161,24 +163,24 @@ export interface IArr3 {
 
 ## Options
 
-| key               | type     | require | default                                          | description                                                  |
-| ----------------- | -------- | ------- | ------------------------------------------------ | ------------------------------------------------------------ |
-| preffix           | string   | ×       | I                                                | Interface preffix, if you don't like this, you can give it a empty string |
-| preffixOfEnum     | string   | ×       | T                                                | Enum type preffix,  if you don't like this, you can give it a empty string |
-| isGenComment      | boolean  | ×       | false                                            | Whether to automatically generate comments                   |
-| indent            | number   | ×       | 2                                                | Code indent                                                  |
-| semi              | boolean  | ×       | true                                             | Is enable semicolon                                          |
-| optional          | boolean  | ×       | true                                             | If this is enabled, it will generate the optional interface, default value is true |
+| key               | type     | require | default                                          | description                                                                                                                                                                                                                                                                                  |
+| ----------------- | -------- | ------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| preffix           | string   | ×       | I                                                | Interface preffix, if you don't like this, you can give it a empty string                                                                                                                                                                                                                    |
+| preffixOfEnum     | string   | ×       | T                                                | Enum type preffix, if you don't like this, you can give it a empty string                                                                                                                                                                                                                    |
+| isGenComment      | boolean  | ×       | false                                            | Whether to automatically generate comments                                                                                                                                                                                                                                                   |
+| indent            | number   | ×       | 2                                                | Code indent                                                                                                                                                                                                                                                                                  |
+| semi              | boolean  | ×       | true                                             | Is enable semicolon                                                                                                                                                                                                                                                                          |
+| optional          | boolean  | ×       | true                                             | If this is enabled, it will generate the optional interface, default value is true                                                                                                                                                                                                           |
 | ignoreKeys        | string[] | ×       | []                                               | If you don't want to generate the type of an attribute in a root object, you can pass in the key name of the corresponding attribute.<br /><br />Like this, ignoreKeys: ["firstName", "lastName"]<br /><br />Schema2ts will ignore the two attributes and doesn't generate the type of them. |
-| explain           | string   | ×       |                                                  | Display some comments at the top of the code                 |
-| parseErrorMessage | string   | ×       | // Parse schema error, please check your schema. | When parse schema error, this message will be return         |
+| explain           | string   | ×       |                                                  | Display some comments at the top of the code                                                                                                                                                                                                                                                 |
+| parseErrorMessage | string   | ×       | // Parse schema error, please check your schema. | When parse schema error, this message will be return                                                                                                                                                                                                                                         |
 
 ## More examples
 
 ### 1.generate comment
 
 ```ts
-schema2ts(`below json`, { isGenComment: true })
+schema2ts(`below json`, { isGenComment: true });
 ```
 
 #### input json
@@ -330,17 +332,16 @@ export interface IArr3 {
   /** This is the enen3 */
   enen3?: boolean;
 }
-
 ```
 
 ### 2.ignoreKeys
 
 ```ts
 schema2ts(`below json`, {
-      ignoreKeys: ['firstName', 'obj', 'hairColor', 'arr'],
-      isGenComment: true,
-      optional: false,
-    })
+  ignoreKeys: ['firstName', 'obj', 'hairColor', 'arr'],
+  isGenComment: true,
+  optional: false,
+});
 ```
 
 #### input json
@@ -452,6 +453,4 @@ export interface ITest {
   /** This is the age */
   age: number;
 }
-
 ```
-
