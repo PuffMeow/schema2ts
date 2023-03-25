@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@puffmeow/schema2ts': ^0.0.2
   '@rollup/plugin-typescript': ^11.0.0
   '@types/node': ^18.14.1
   '@vitest/coverage-c8': ^0.29.2
@@ -9,6 +10,9 @@ specifiers:
   typescript: ^5.0.2
   vite: ^4.1.4
   vitest: ^0.29.2
+
+dependencies:
+  '@puffmeow/schema2ts': 0.0.2
 
 devDependencies:
   '@rollup/plugin-typescript': 11.0.0_jxqmhqfhmldssz5ljqwxlwrphi
@@ -244,6 +248,10 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
+
+  /@puffmeow/schema2ts/0.0.2:
+    resolution: {integrity: sha512-NqHoqOx08v3LKlGVrm6Sma+SnDuhrTnOq8lb78seaiOYD0qexOcZ8WjCDg1h1Jcvb+YhtGCStw/ootjFYKP8BA==}
+    dev: false
 
   /@rollup/plugin-typescript/11.0.0_jxqmhqfhmldssz5ljqwxlwrphi:
     resolution: {integrity: sha512-goPyCWBiimk1iJgSTgsehFD5OOFHiAknrRJjqFCudcW8JtWiBlK284Xnn4flqMqg6YAjVG/EE+3aVzrL5qNSzQ==}

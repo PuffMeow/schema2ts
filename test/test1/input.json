@@ -68,7 +68,7 @@
                   "type": "boolean"
                 },
                 "enen4": {
-                  "type": "any"
+                  "type": "unknow type"
                 }
               }
             }

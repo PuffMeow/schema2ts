@@ -31,13 +31,13 @@ function schema2ts(schema: string, options?: IOptions) {
       case 'undefined':
       case 'null':
         if (prop?.enum) {
-          return `T${capitalizedKey}`;
+          return `${opts.preffixOfEnum}${capitalizedKey}`;
         }
         return prop.type;
       case 'object':
-        return `I${capitalizedKey}`;
+        return `${opts.preffix}${capitalizedKey}`;
       case 'array':
-        return `I${capitalizedKey}[]`;
+        return `${opts.preffix}${capitalizedKey}[]`;
       default:
         return 'any';
     }
@@ -52,7 +52,7 @@ function schema2ts(schema: string, options?: IOptions) {
     if (opts.isGenComment) {
       interfaceStr += `${generateComment(schema, 0)}`;
     }
-    interfaceStr += `export interface I${capitalize(name)} {\n`;
+    interfaceStr += `export interface ${opts.preffix}${capitalize(name)} {\n`;
 
     for (let i = 0; i < Object.keys(schema?.properties || {}).length; i++) {
       const key = Object.keys(schema?.properties || {})[i];

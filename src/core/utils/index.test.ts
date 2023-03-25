@@ -85,6 +85,7 @@ describe('utils test', () => {
 
   test('should get a right indent', () => {
     expect(getIndent(2)).toBe('  ');
+    expect(getIndent(4)).toBe('    ');
   });
 
   test('should generate comment correctly', () => {

@@ -8,4 +8,6 @@ export const defaultOptions: IOptions = {
   indent: 2,
   semi: true,
   ignoreKeys: [],
+  preffix: 'I',
+  preffixOfEnum: 'T',
 };
