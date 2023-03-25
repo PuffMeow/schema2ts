@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { schema2ts } from '../src';
+import schema2ts from '../src';
 import { IOptions } from '../src/core/types/schema2ts';
 
 const readFile = (pathToFind: string) =>

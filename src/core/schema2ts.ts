@@ -8,11 +8,9 @@ import {
   parseJson,
   removeComment,
 } from './utils';
-import type { IJsonSchema, IOptions } from './types/schema2ts';
+import { IJsonSchema, IOptions } from './types/schema2ts';
 
-export { IOptions };
-
-export function schema2ts(schema: string, options?: IOptions) {
+function schema2ts(schema: string, options?: IOptions) {
   const opts = { ...defaultOptions, ...options } as Required<IOptions>;
 
   const jsonSchema: IJsonSchema = parseJson(schema);
@@ -138,3 +136,5 @@ export function schema2ts(schema: string, options?: IOptions) {
 
   return output;
 }
+
+export { schema2ts, IOptions };

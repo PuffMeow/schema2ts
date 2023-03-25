@@ -1,1 +1,1 @@
-export * from "./schema2ts";
+export { schema2ts, IOptions } from './schema2ts';

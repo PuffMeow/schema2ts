@@ -2,11 +2,20 @@
   "name": "schema-ts",
   "version": "0.0.1",
   "description": "Transform JSON Schema to Typescript interface",
-  "main": "index.js",
   "files": [
-    "./dist/index.js"
+    "dist"
   ],
+  "main": "./dist/schema-ts.umd.cjs",
+  "module": "./dist/schema-ts.js",
+  "exports": {
+    ".": {
+      "import": "./dist/schema-ts.js",
+      "require": "./dist/schema-ts.umd.cjs"
+    }
+  },
+  "type": "module",
   "scripts": {
+    "build": "vite build",
     "test:watch": "vitest",
     "test": "vitest run",
     "coverage": "vitest run --coverage"
@@ -15,9 +24,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@rollup/plugin-typescript": "^11.0.0",
     "@types/node": "^18.14.1",
     "@vitest/coverage-c8": "^0.29.2",
     "prettier": "2.8.4",
+    "tslib": "^2.5.0",
+    "typescript": "^5.0.2",
     "vite": "^4.1.4",
     "vitest": "^0.29.2"
   }
