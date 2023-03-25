@@ -56,8 +56,11 @@ export function schema2ts(schema: string, options?: IOptions) {
     }
     interfaceStr += `export interface I${capitalize(name)} {\n`;
 
-    for (const key in schema.properties) {
-      const prop = schema.properties[key];
+    for (let i = 0; i < Object.keys(schema?.properties || {}).length; i++) {
+      const key = Object.keys(schema?.properties || {})[i];
+      if (opts.ignoreKeys.includes(key)) continue;
+
+      const prop = (schema?.properties || {})[key];
       const type = getType(prop, key);
       // generate comment
       if (opts.isGenComment) {
@@ -90,8 +93,12 @@ export function schema2ts(schema: string, options?: IOptions) {
       interfaces.push(interfaceStr);
     }
 
-    for (const key in schema.properties) {
-      const prop = schema.properties[key];
+    for (let i = 0; i < Object.keys(schema?.properties || {}).length; i++) {
+      const key = Object.keys(schema?.properties || {})[i];
+
+      if (opts.ignoreKeys.includes(key)) continue;
+
+      const prop = (schema?.properties || {})[key];
 
       if (prop?.enum && Array.isArray(prop.enum)) {
         const enumType = generateEnum(prop, key);

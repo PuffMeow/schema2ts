@@ -5,9 +5,10 @@ import {
   getIndent,
   generateComment,
   removeComment,
+  checkIsValidTitle,
 } from './index';
 
-describe('helper test', () => {
+describe('utils test', () => {
   test('should uppercase the first letter', () => {
     expect(capitalize('hello world')).toBe('Hello world');
   });
@@ -105,13 +106,18 @@ describe('helper test', () => {
         title: 'test string title',
         description: 'test string description',
       }),
-    ).toBe(`  /** test string title (test string description) */\n`)
+    ).toBe(`  /** test string title (test string description) */\n`);
 
-
-    expect(generateComment({})).toBe('')
+    expect(generateComment({})).toBe('');
   });
 
   test('should remove comment', () => {
     expect(removeComment(`  /** test arr3 test arr3 items */\n`)).toBe('');
+  });
+
+  test('checkIsValidTitle', () => {
+    expect(checkIsValidTitle()).toBe(false);
+    expect(checkIsValidTitle('Test')).toBe(true);
+    expect(checkIsValidTitle('冲冲冲')).toBe(false);
   });
 });

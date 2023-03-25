@@ -48,4 +48,12 @@ describe('check whether output is correctly when change default config', () => {
       isGenComment: true,
     });
   });
+
+  test('ignoreKeys', () => {
+    expectCorrectOutput('./test5/input.json', './test5/output.ts', {
+      ignoreKeys: ['firstName', 'obj', 'hairColor', 'arr'],
+      isGenComment: true,
+      optional: false,
+    });
+  });
 });
