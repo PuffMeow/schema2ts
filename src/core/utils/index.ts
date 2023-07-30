@@ -1,26 +1,35 @@
-import type { IEnumType, IJsonSchema } from '../types/schema2ts';
+import type { IEnum, IEnumType, IJsonSchema } from "../types/schema2ts";
 
 /** Make the first letter uppercase */
-export function capitalize(str = '') {
+export function capitalize(str = "") {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 /** Generate enum type */
-export function getEnumType(enumVals: IEnumType[]) {
-  let result = '';
+export function getEnumType(enumVals: IEnum) {
+  let result = "";
   const len = enumVals.length;
   for (let i = 0; i < len; i++) {
     const e = enumVals[i];
-    if (!e.value) continue;
 
-    if (i === len - 1) {
-      if (enumVals[i + 1]?.value) {
-        result += `'${e?.value?.trim()}' | `;
+    if (typeof e === "object") {
+      if (!e.value) continue;
+
+      if (i === len - 1) {
+        if ((enumVals[i + 1] as IEnumType)?.value) {
+          result += `'${e?.value?.trim()}' | `;
+        } else {
+          result += `'${e.value.trim()}'`;
+        }
       } else {
-        result += `'${e.value.trim()}'`;
+        result += `'${e.value.trim()}' | `;
       }
     } else {
-      result += `'${e.value.trim()}' | `;
+      if (i === len - 1) {
+        result += `'${e.trim()}'`;
+      } else {
+        result += `'${e.trim()}' | `;
+      }
     }
   }
 
@@ -29,7 +38,7 @@ export function getEnumType(enumVals: IEnumType[]) {
 
 /** Handle code indent */
 export function getIndent(indent: number) {
-  return ''.padStart(indent, ' ');
+  return "".padStart(indent, " ");
 }
 
 export function parseJson(schema: string) {
@@ -42,9 +51,9 @@ export function parseJson(schema: string) {
 }
 
 export function generateComment(schema: IJsonSchema, indent = 2) {
-  let comment = '';
+  let comment = "";
 
-  if (schema.type === 'array' || schema.items) {
+  if (schema.type === "array" || schema.items) {
     if (schema.title) {
       comment += schema.title;
     }
@@ -67,20 +76,20 @@ export function generateComment(schema: IJsonSchema, indent = 2) {
     return `${getIndent(indent)}/** ${comment} */\n`;
   }
 
-  return '';
+  return "";
 }
 
-export function removeComment(interfaceStr = '') {
+export function removeComment(interfaceStr = "") {
   return interfaceStr
-    .split('\n')
+    .split("\n")
     .map((line) => {
-      return line.replace(/\s*\/\*\*(.*?)\*\/\s*/, '');
+      return line.replace(/\s*\/\*\*(.*?)\*\/\s*/, "");
     })
     .filter((v) => v.length > 0)
-    .join('\n');
+    .join("\n");
 }
 
 export function checkIsValidTitle(str?: string) {
-  if(!str) return false;
-  return /[a-zA-Z_$]/.test(str)
+  if (!str) return false;
+  return /[a-zA-Z_$]/.test(str);
 }

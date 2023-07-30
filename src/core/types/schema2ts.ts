@@ -26,12 +26,13 @@ export interface IOptions {
   ignoreKeys?: string[];
 }
 
+export type IEnum = IEnumType[] | string[];
 export interface IJsonSchema {
   title?: string;
   type?: string;
   properties?: { [key: string]: IJsonSchema };
   items?: IJsonSchema;
-  enum?: IEnumType[];
+  enum?: IEnum;
   description?: string;
 }
 
