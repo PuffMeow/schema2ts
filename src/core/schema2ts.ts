@@ -1,4 +1,4 @@
-import { defaultOptions } from './default';
+import { defaultOptions } from "./default";
 import {
   capitalize,
   checkIsValidTitle,
@@ -7,8 +7,8 @@ import {
   getIndent,
   parseJson,
   removeComment,
-} from './utils';
-import { IJsonSchema, IOptions } from './types/schema2ts';
+} from "./utils";
+import { IJsonSchema, IOptions } from "./types/schema2ts";
 
 function schema2ts(schema: string, options?: IOptions) {
   const opts = { ...defaultOptions, ...options } as Required<IOptions>;
@@ -19,36 +19,37 @@ function schema2ts(schema: string, options?: IOptions) {
 
   const interfaces: string[] = [];
   const cacheTypeName = new Set<string>();
+  const typeKeyMap = new Map<string, number>();
 
   const getType = (prop?: IJsonSchema, key?: string) => {
     const capitalizedKey = capitalize(key);
 
     switch (prop?.type?.toLowerCase()) {
-      case 'string':
-      case 'number':
-      case 'boolean':
-      case 'integer':
-      case 'undefined':
-      case 'null':
+      case "string":
+      case "number":
+      case "boolean":
+      case "integer":
+      case "undefined":
+      case "null":
         if (prop?.enum) {
           return `${opts.preffixOfEnum}${capitalizedKey}`;
         }
         return prop.type;
-      case 'object':
+      case "object":
         return `${opts.preffix}${capitalizedKey}`;
-      case 'array':
+      case "array":
         return `${opts.preffix}${capitalizedKey}[]`;
       default:
-        return 'any';
+        return "any";
     }
   };
 
   // From root object to generate
   const generateRootInterface = (
     schema: IJsonSchema,
-    name: string = 'Schema',
+    name: string = "Schema"
   ) => {
-    let interfaceStr = '';
+    let interfaceStr = "";
     if (opts.isGenComment) {
       interfaceStr += `${generateComment(schema, 0)}`;
     }
@@ -64,9 +65,9 @@ function schema2ts(schema: string, options?: IOptions) {
       if (opts.isGenComment) {
         interfaceStr += generateComment(prop, opts.indent);
       }
-      const optionalSymbol = opts.optional ? '?' : '';
+      const optionalSymbol = opts.optional ? "?" : "";
       interfaceStr += `${getIndent(
-        opts.indent,
+        opts.indent
       )}${key}${optionalSymbol}: ${type};\n`;
     }
 
@@ -74,11 +75,17 @@ function schema2ts(schema: string, options?: IOptions) {
     return interfaceStr;
   };
 
-  const generateEnum = (schema: IJsonSchema, key: string = 'Enum') => {
-    return `export type T${capitalize(key)} = ${getEnumType(schema.enum!)};\n`;
+  const generateEnum = (
+    schema: IJsonSchema,
+    key: string = "Enum",
+    suffixNum = ""
+  ) => {
+    return `export type ${opts.preffixOfEnum}${capitalize(
+      key
+    )}${suffixNum} = ${getEnumType(schema.enum!)};\n`;
   };
 
-  const generateInterface = (schema: IJsonSchema, key: string = 'Schema') => {
+  const generateInterface = (schema: IJsonSchema, key: string = "Schema") => {
     let interfaceStr = generateRootInterface(schema, key);
 
     const plainInterfaceStr = opts.isGenComment
@@ -99,10 +106,22 @@ function schema2ts(schema: string, options?: IOptions) {
       const prop = (schema?.properties || {})[key];
 
       if (prop?.enum && Array.isArray(prop.enum)) {
-        const enumType = generateEnum(prop, key);
+        let enumType = generateEnum(prop, key);
+
+        if (typeKeyMap.has(key)) {
+          let keyNum = typeKeyMap.get(key) || 1;
+          keyNum++;
+          typeKeyMap.set(key, keyNum);
+        } else {
+          typeKeyMap.set(key, 1);
+        }
 
         // unique the enums
         if (!cacheTypeName.has(enumType)) {
+          let num = typeKeyMap.get(key) || 1;
+          if (num > 1) {
+            enumType = generateEnum(prop, key, `${num}`);
+          }
           cacheTypeName.add(enumType);
           interfaces.unshift(enumType);
         }
@@ -120,18 +139,18 @@ function schema2ts(schema: string, options?: IOptions) {
 
   generateInterface(
     jsonSchema,
-    checkIsValidTitle(jsonSchema?.title) ? jsonSchema.title : 'Schema',
+    checkIsValidTitle(jsonSchema?.title) ? jsonSchema.title : "Schema"
   );
 
   if (options?.explain) {
     interfaces.unshift(options.explain);
   }
 
-  let output = interfaces.join('\n');
+  let output = interfaces.join("\n");
 
   if (!opts.semi) {
     // remove all semicolons
-    output = output.replace(/;/g, '');
+    output = output.replace(/;/g, "");
   }
 
   return output;

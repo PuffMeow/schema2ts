@@ -40,5 +40,8 @@
     "typescript": "^5.0.2",
     "vite": "^4.1.4",
     "vitest": "^0.29.2"
+  },
+  "dependencies": {
+    "@puffmeow/rusty-schema2ts": "^0.0.1"
   }
 }

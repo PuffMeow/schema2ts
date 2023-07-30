@@ -7,15 +7,14 @@ export function capitalize(str = '') {
 
 /** Generate enum type */
 export function getEnumType(enumVals: IEnumType[]) {
-  const enums = Object.values(enumVals);
   let result = '';
-  const len = enums.length;
+  const len = enumVals.length;
   for (let i = 0; i < len; i++) {
-    const e = enums[i];
+    const e = enumVals[i];
     if (!e.value) continue;
 
     if (i === len - 1) {
-      if (enums[i + 1]?.value) {
+      if (enumVals[i + 1]?.value) {
         result += `'${e?.value?.trim()}' | `;
       } else {
         result += `'${e.value.trim()}'`;
