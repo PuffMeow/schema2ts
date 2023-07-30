@@ -59,6 +59,8 @@ function schema2ts(schema: string, options?: IOptions) {
       const key = Object.keys(schema?.properties || {})[i];
       if (opts.ignoreKeys.includes(key)) continue;
 
+      // TODO: 这里要加一个类型自动递增
+
       const prop = (schema?.properties || {})[key];
       const type = getType(prop, key);
       // generate comment
