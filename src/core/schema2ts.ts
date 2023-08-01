@@ -18,8 +18,8 @@ function schema2ts(schema: string, options?: IOptions) {
   if (!jsonSchema) return opts.parseErrorMessage;
 
   const interfaces: string[] = [];
-  const cacheTypeName = new Set<string>();
-  const typeKeyMap = new Map<string, number>();
+  const cacheEnumTypes = new Set<string>();
+  const enumTypeKeyNumMap = new Map<string, number>();
 
   const getType = (prop?: IJsonSchema, key?: string) => {
     const capitalizedKey = capitalize(key);
@@ -31,9 +31,27 @@ function schema2ts(schema: string, options?: IOptions) {
       case 'integer':
       case 'undefined':
       case 'null':
-        if (prop?.enum) {
+        if (prop?.enum && key) {
+          if (enumTypeKeyNumMap.has(key)) {
+            let keyNum = enumTypeKeyNumMap.get(key) || 1;
+            keyNum++;
+            enumTypeKeyNumMap.set(key, keyNum);
+          } else {
+            enumTypeKeyNumMap.set(key, 1);
+          }
+
+          let enumType = generateEnum(prop, key);
+          if (!cacheEnumTypes.has(enumType)) {
+            let num = enumTypeKeyNumMap.get(key) || 1;
+
+            if (num > 1) {
+              capitalizedKey += `${num}`;
+            }
+          }
+
           return `${opts.preffixOfEnum}${capitalizedKey}`;
         }
+
         return prop.type;
       case 'object':
         return `${opts.preffix}${capitalizedKey}`;
@@ -88,12 +106,10 @@ function schema2ts(schema: string, options?: IOptions) {
   const generateInterface = (schema: IJsonSchema, key: string = 'Schema') => {
     let interfaceStr = generateRootInterface(schema, key);
 
-    const plainInterfaceStr = opts.isGenComment
-      ? removeComment(interfaceStr)
-      : interfaceStr;
+    const plainInterfaceStr = opts.isGenComment ? removeComment(interfaceStr) : interfaceStr;
 
-    if (!cacheTypeName.has(plainInterfaceStr)) {
-      cacheTypeName.add(plainInterfaceStr);
+    if (!cacheEnumTypes.has(plainInterfaceStr)) {
+      cacheEnumTypes.add(plainInterfaceStr);
 
       interfaces.push(interfaceStr);
     }
@@ -108,21 +124,15 @@ function schema2ts(schema: string, options?: IOptions) {
       if (prop?.enum && Array.isArray(prop.enum)) {
         let enumType = generateEnum(prop, key);
 
-        if (typeKeyMap.has(key)) {
-          let keyNum = typeKeyMap.get(key) || 1;
-          keyNum++;
-          typeKeyMap.set(key, keyNum);
-        } else {
-          typeKeyMap.set(key, 1);
-        }
-
         // unique the enums
-        if (!cacheTypeName.has(enumType)) {
-          let num = typeKeyMap.get(key) || 1;
+        if (!cacheEnumTypes.has(enumType)) {
+          let num = enumTypeKeyNumMap.get(key) || 1;
+
           if (num > 1) {
             enumType = generateEnum(prop, key, `${num}`);
           }
-          cacheTypeName.add(enumType);
+
+          cacheEnumTypes.add(enumType);
           interfaces.unshift(enumType);
         }
       }
