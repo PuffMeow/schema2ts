@@ -77,8 +77,6 @@ function schema2ts(schema: string, options?: IOptions) {
       const key = Object.keys(schema?.properties || {})[i];
       if (opts.ignoreKeys.includes(key)) continue;
 
-      // TODO: 这里要加一个类型自动递增
-
       const prop = (schema?.properties || {})[key];
       const type = getType(prop, key);
       // generate comment
@@ -100,13 +98,17 @@ function schema2ts(schema: string, options?: IOptions) {
     key: string = 'Enum',
     suffixNum = '',
   ) => {
-    return `export type ${opts.preffixOfEnum}${capitalize(key)}${suffixNum} = ${getEnumType(schema.enum!)}${opts.semi ? ';' : ''}\n`;
+    return `export type ${opts.preffixOfEnum}${capitalize(
+      key,
+    )}${suffixNum} = ${getEnumType(schema.enum!)}${opts.semi ? ';' : ''}\n`;
   };
 
   const generateInterface = (schema: IJsonSchema, key: string = 'Schema') => {
     let interfaceStr = generateRootInterface(schema, key);
 
-    const plainInterfaceStr = opts.isGenComment ? removeComment(interfaceStr) : interfaceStr;
+    const plainInterfaceStr = opts.isGenComment
+      ? removeComment(interfaceStr)
+      : interfaceStr;
 
     if (!cacheEnumTypes.has(plainInterfaceStr)) {
       cacheEnumTypes.add(plainInterfaceStr);
