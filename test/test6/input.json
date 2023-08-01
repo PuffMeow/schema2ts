@@ -27,6 +27,10 @@
         }
       ],
       "type": "string"
+    },
+    "hairColor2": {
+      "enum": ["color1", "color2"],
+      "type": "string"
     }
   }
 }
