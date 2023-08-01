@@ -22,7 +22,7 @@ function schema2ts(schema: string, options?: IOptions) {
   const enumTypeKeyNumMap = new Map<string, number>();
 
   const getType = (prop?: IJsonSchema, key?: string) => {
-    const capitalizedKey = capitalize(key);
+    let capitalizedKey = capitalize(key);
 
     switch (prop?.type?.toLowerCase()) {
       case 'string':
