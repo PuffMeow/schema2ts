@@ -14,8 +14,7 @@ const expectCorrectOutput = (
 ) => {
   const input = readFile(inputPath);
   const output = readFile(outputPath);
-  const result = schema2ts(input, options);
-  expect(result).toBe(output);
+  expect(schema2ts(input, options)).toBe(output);
 };
 
 describe('check whether output is correctly when use default config', () => {
