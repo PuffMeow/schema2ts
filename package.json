@@ -1,6 +1,6 @@
 {
   "name": "@puffmeow/schema2ts",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Transform JSON Schema to Typescript interface automatically",
   "files": [
     "dist"
@@ -22,7 +22,8 @@
     "build": "vite build",
     "test:watch": "vitest",
     "test": "vitest run",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "pub": "npm run build && npm run test && npm publish"
   },
   "keywords": [
     "schema to typescript",
