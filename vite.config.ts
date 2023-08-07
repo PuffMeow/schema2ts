@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import path, { resolve } from 'path';
+import { resolve } from 'path';
 import ts from '@rollup/plugin-typescript';
 
 export default defineConfig({
@@ -11,5 +11,4 @@ export default defineConfig({
     },
   },
   plugins: [ts()],
-  test: {},
 });
