@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-dependencies:
-  '@puffmeow/rusty-schema2ts':
-    specifier: ^0.0.1
-    version: 0.0.1
-
 devDependencies:
   '@rollup/plugin-typescript':
     specifier: ^11.0.0
@@ -292,121 +287,6 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
-
-  /@puffmeow/rusty-schema2ts-darwin-arm64@0.0.1:
-    resolution: {integrity: sha512-syBa+zsbjwcmcXUHuwm7yZECvi8zxLSdc+UFcryN4UeoB8U9BCBJwcM1hNfjArXjmjTaH7RTOxeICqBbvJp0yg==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [darwin]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /@puffmeow/rusty-schema2ts-darwin-universal@0.0.1:
-    resolution: {integrity: sha512-9GrrNF8UseUjHXINaquAYhnK/f034gXFKIxRs3xuz73Jv+mcc+xGUEw/XUS+rd1EWlwfwpB2EBImEzRbZov8Tw==}
-    engines: {node: '>= 10'}
-    os: [darwin]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /@puffmeow/rusty-schema2ts-darwin-x64@0.0.1:
-    resolution: {integrity: sha512-vMfqvcA0PPLSSAqIgVWK2+xFi8DThgeDjU7EXFvjWPhjm2NioLJYxIgPqfjf8Gm1ejfwEtaNGypId1H88XklXA==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [darwin]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /@puffmeow/rusty-schema2ts-freebsd-x64@0.0.1:
-    resolution: {integrity: sha512-6kiSR8aBrIks0Ly/JQ5YFyB/bO4U2dUGIgpZ9fM5JRsAi0HTBdgcKZ8/IT+mUxRxu8oaUhedDi283/rlZzVVfw==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [freebsd]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /@puffmeow/rusty-schema2ts-linux-arm-gnueabihf@0.0.1:
-    resolution: {integrity: sha512-FeB1j6GvY67ajLXrDQ/Fe1EGY27FKg1j7krosJlaz77op8qConcWQfcKoIHIy5H8klrSSsblCSe2KRDEw2bV7Q==}
-    engines: {node: '>= 10'}
-    cpu: [arm]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /@puffmeow/rusty-schema2ts-linux-arm64-gnu@0.0.1:
-    resolution: {integrity: sha512-vI1X90e6qgsRCf5ROohgPQbKJic7+dzgPVPrNSU5hGj1DVUf3HDsShhvFoXvd9HoE6mHHzsvebNPHzBwcyRFFQ==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /@puffmeow/rusty-schema2ts-linux-arm64-musl@0.0.1:
-    resolution: {integrity: sha512-AYAIqjaMRrOT4zNiwHe2OpfMnMaOLeOrtlMpl+HUnJ6Rdu9S0p1XkH5HyGiyox9jAGmJwGLQH4Y8TgXY+f/t/A==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /@puffmeow/rusty-schema2ts-linux-x64-gnu@0.0.1:
-    resolution: {integrity: sha512-drDmPoU5VUhwVXjK2A+zx+nxQ7WXqBxjZvFDGuJoKr+OhKCZKZ7VOkVR7H7y6h6meJ6wMWdhlWR1qOfFHx/jTw==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /@puffmeow/rusty-schema2ts-linux-x64-musl@0.0.1:
-    resolution: {integrity: sha512-QZcdRwlggtTPEsJ1InYbNFuYBG4Rdt62A+t66eH1cpN8B/8qzlfsSksecLRLftMaE7nbUMHg7gi0NP+JjGiHKw==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /@puffmeow/rusty-schema2ts-win32-arm64-msvc@0.0.1:
-    resolution: {integrity: sha512-MBpZM05sVjdvDUTHTFYmtMRp885lDLfKENtdqwqbuly24ZtStCaQQ8pSeI529zU4W9BR7HrlQIiogqBycjYlMg==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /@puffmeow/rusty-schema2ts-win32-x64-msvc@0.0.1:
-    resolution: {integrity: sha512-szs22LMgEWwnGDb/ht3BY6EHYKmsaypSjdm3z62QiHdJuFby9SMJmzh2MBHKA4jis9NyFvmvB8cZeISL5KX5gQ==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /@puffmeow/rusty-schema2ts@0.0.1:
-    resolution: {integrity: sha512-bHiGlPQz0/vgTvZgTTSPMAnugq/UGXsOlJ82Evtp2iF9WNrcTCQwyjOCxATQ8ehzXtdJdFRxApVg8ViUM8kxHQ==}
-    engines: {node: '>= 10'}
-    optionalDependencies:
-      '@puffmeow/rusty-schema2ts-darwin-arm64': 0.0.1
-      '@puffmeow/rusty-schema2ts-darwin-universal': 0.0.1
-      '@puffmeow/rusty-schema2ts-darwin-x64': 0.0.1
-      '@puffmeow/rusty-schema2ts-freebsd-x64': 0.0.1
-      '@puffmeow/rusty-schema2ts-linux-arm-gnueabihf': 0.0.1
-      '@puffmeow/rusty-schema2ts-linux-arm64-gnu': 0.0.1
-      '@puffmeow/rusty-schema2ts-linux-arm64-musl': 0.0.1
-      '@puffmeow/rusty-schema2ts-linux-x64-gnu': 0.0.1
-      '@puffmeow/rusty-schema2ts-linux-x64-musl': 0.0.1
-      '@puffmeow/rusty-schema2ts-win32-arm64-msvc': 0.0.1
-      '@puffmeow/rusty-schema2ts-win32-x64-msvc': 0.0.1
-    dev: false
 
   /@rollup/plugin-typescript@11.0.0(tslib@2.5.0)(typescript@5.1.6):
     resolution: {integrity: sha512-goPyCWBiimk1iJgSTgsehFD5OOFHiAknrRJjqFCudcW8JtWiBlK284Xnn4flqMqg6YAjVG/EE+3aVzrL5qNSzQ==}

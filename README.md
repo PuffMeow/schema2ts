@@ -2,7 +2,7 @@
 
 This is a tool that can help you transform your JSON Schema to TypeScript interface quickly🧲.
 
-If you want a faster implementation, you can see [rusty-schema2ts](https://github.com/PuffMeow/rusty-schema2ts), it use napi-rs to implement and is faster than the TypeScript version.
+If you want a faster implementation, you can see [rusty-schema2ts](https://github.com/PuffMeow/rusty-schema2ts), it uses napi-rs to implement and it is faster than this TypeScript version.
 
 **1.3kb** after gzip.
 
