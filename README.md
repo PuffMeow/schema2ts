@@ -6,7 +6,7 @@ If you want a faster implementation, you can see [rusty-schema2ts](https://githu
 
 **1.3kb** after gzip.
 
-[Git resposity](https://github.com/PuffMeow/schema2ts). If you like it, please give me a little star♥
+[Git repository](https://github.com/PuffMeow/schema2ts). If you like it, please give me a little star♥
 
 ## Install
 
