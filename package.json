@@ -26,9 +26,12 @@
     "pub": "npm run build && npm run test && npm publish"
   },
   "keywords": [
+    "jsonschema to interface",
+    "jsonschema to ts",
     "schema to typescript",
-    "transformer",
-    "schema2ts"
+    "schema to ts",
+    "schema to interface",
+    "schema to type",
   ],
   "author": "",
   "license": "ISC",
