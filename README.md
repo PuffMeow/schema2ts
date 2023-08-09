@@ -6,6 +6,8 @@ This is a tool that can help you transform your JSON Schema to TypeScript interf
 
 If you want a faster implementation, you can see [rusty-schema2ts](https://github.com/PuffMeow/rusty-schema2ts), it uses napi-rs to implement and it's faster than this TypeScript version.
 
+__The api of them are all the same.__
+
 ## TypeScript vs Rust
 
 You can find [benchmark here](https://github.com/PuffMeow/rusty-schema2ts/blob/main/bench/index.js)
@@ -177,7 +179,7 @@ export interface IArr3 {
 | preffix           | string   | ×        | I                                                | Interface preffix, if you don't like this, you can give it a empty string |
 | preffixOfEnum     | string   | ×        | T                                                | Enum type preffix, if you don't like this, you can give it a empty string |
 | isGenComment      | boolean  | ×        | false                                            | Whether to automatically generate comments                   |
-| isExport          | boolean  | ×        | false                                            | Whether to export the interfaces and types                   |
+| isExport          | boolean  | ×        | true                                            | Whether to export the interfaces and types                   |
 | indent            | number   | ×        | 2                                                | Code indent                                                  |
 | semi              | boolean  | ×        | true                                             | Is enable semicolon                                          |
 | optional          | boolean  | ×        | true                                             | If this is enabled, it will generate the optional interface, default value is true |

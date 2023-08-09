@@ -1,6 +1,6 @@
 {
   "name": "@puffmeow/schema2ts",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Transform JSON Schema to Typescript interface automatically",
   "files": [
     "dist"
