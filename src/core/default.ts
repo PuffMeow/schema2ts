@@ -5,6 +5,7 @@ export const defaultOptions: IOptions = {
   optional: true,
   explain: '',
   isGenComment: false,
+  isExport: true,
   indent: 2,
   semi: true,
   ignoreKeys: [],

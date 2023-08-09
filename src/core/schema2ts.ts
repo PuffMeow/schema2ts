@@ -71,7 +71,7 @@ function schema2ts(schema: string, options?: IOptions) {
     if (opts.isGenComment) {
       interfaceStr += `${generateComment(schema, 0)}`;
     }
-    interfaceStr += `export interface ${opts.preffix}${capitalize(name)} {\n`;
+    interfaceStr += `${opts.isExport ? 'export ' : ''}interface ${opts.preffix}${capitalize(name)} {\n`;
 
     for (let i = 0; i < Object.keys(schema?.properties || {}).length; i++) {
       const key = Object.keys(schema?.properties || {})[i];
@@ -98,7 +98,7 @@ function schema2ts(schema: string, options?: IOptions) {
     key: string = 'Enum',
     suffixNum = '',
   ) => {
-    return `export type ${opts.preffixOfEnum}${capitalize(
+    return `${opts.isExport ? 'export ' : ''}type ${opts.preffixOfEnum}${capitalize(
       key,
     )}${suffixNum} = ${getEnumType(schema.enum!)}${opts.semi ? ';' : ''}\n`;
   };

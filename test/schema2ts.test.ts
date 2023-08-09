@@ -35,7 +35,7 @@ describe('check whether output is correctly when use default config', () => {
 });
 
 describe('check whether output is correctly when change default config', () => {
-  test('disable semi', () => {
+  test('should disable semi', () => {
     expectCorrectOutput('./test2/input.json', './test2/output.ts', {
       semi: false,
       indent: 4,
@@ -43,24 +43,30 @@ describe('check whether output is correctly when change default config', () => {
     });
   });
 
-  test('automatically generate comment', () => {
+  test('should automatically generate comment', () => {
     expectCorrectOutput('./test3/input.json', './test3/output.ts', {
       isGenComment: true,
     });
   });
 
-  test('disable optional', () => {
+  test('should disable optional', () => {
     expectCorrectOutput('./test4/input.json', './test4/output.ts', {
       optional: false,
       isGenComment: true,
     });
   });
 
-  test('ignoreKeys', () => {
+  test('should ignoreKeys', () => {
     expectCorrectOutput('./test5/input.json', './test5/output.ts', {
       ignoreKeys: ['firstName', 'obj', 'hairColor', 'arr'],
       isGenComment: true,
       optional: false,
+    });
+  });
+
+  test('should not export interfaces and types', () => {
+    expectCorrectOutput('./test8/input.json', './test8/output.ts', {
+      isExport: false,
     });
   });
 });
