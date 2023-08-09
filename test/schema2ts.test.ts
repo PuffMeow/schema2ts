@@ -1,8 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import schema2ts from '../src';
-import { IOptions } from '../src/core/types/schema2ts';
+import { IOptions, schema2ts } from '../src/core/index';
 
 const readFile = (pathToFind: string) =>
   fs.readFileSync(path.join(__dirname, pathToFind), 'utf-8');

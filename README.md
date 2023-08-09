@@ -6,6 +6,15 @@ This is a tool that can help you transform your JSON Schema to TypeScript interf
 
 If you want a faster implementation, you can see [rusty-schema2ts](https://github.com/PuffMeow/rusty-schema2ts), it uses napi-rs to implement and it's faster than this TypeScript version.
 
+## TypeScript vs Rust
+
+You can find [benchmark here](https://github.com/PuffMeow/rusty-schema2ts/blob/main/bench/index.js)
+
+| index | Task Name             | ops/sec | Average Time (ns)  | Margin | Samples |
+| ----- | --------------------- | ------- | ------------------ | ------ | ------- |
+| 0     | TypeScript: schema2ts | 2,796   | 357534.31021794415 | ±1.08% | 1399    |
+| 1     | Rust: rustySchema2ts  | 5,431   | 184122.05448994122 | ±0.29% | 2716    |
+
 ## Install
 
 npm
@@ -31,7 +40,7 @@ yarn add @puffmeow/schema2ts
 It's really easy to use.
 
 ```ts
-import schema2ts from '@puffmeow/schema2ts';
+import { schema2ts } from '@puffmeow/schema2ts';
 
 // The "options" we will introduce later
 // schema2ts(schema: string, options?: IOptions): string
