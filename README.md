@@ -1,12 +1,12 @@
-## Introduce
+## Introduction
 
-This is a tool that can help you transform your JSON Schema to TypeScript interface quickly🧲.
+This tool can help you transform your JSON Schema to TypeScript interface quickly🧲.
 
-[Git repository](https://github.com/PuffMeow/schema2ts). If you like it, please give me a little star♥, thanks~
+[Git repository](https://github.com/PuffMeow/schema2ts). If you like it, please give me a little star⭐, thanks~
 
 If you want a faster implementation, you can see [rusty-schema2ts](https://github.com/PuffMeow/rusty-schema2ts), it uses napi-rs to implement and it's faster than this TypeScript version.
 
-__The api of them are all the same.__
+**The api of them are all the same.**
 
 ## TypeScript vs Rust
 
@@ -49,9 +49,26 @@ import { schema2ts } from '@puffmeow/schema2ts';
 schema2ts(`your schema`, options);
 ```
 
-If you have a schema like this:
+## Options
+
+| key               | type     | required | default                                          | description                                                                                                                                                                                                                                                                                  |
+| ----------------- | -------- | -------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| preffix           | string   | ×        | I                                                | Interface preffix, if you don't like this, you can give it a empty string                                                                                                                                                                                                                    |
+| preffixOfEnum     | string   | ×        | T                                                | Enum type preffix, if you don't like this, you can give it a empty string                                                                                                                                                                                                                    |
+| isGenComment      | boolean  | ×        | false                                            | Whether to automatically generate comments                                                                                                                                                                                                                                                   |
+| isExport          | boolean  | ×        | true                                             | Whether to export the interfaces and types                                                                                                                                                                                                                                                   |
+| indent            | number   | ×        | 2                                                | Code indent                                                                                                                                                                                                                                                                                  |
+| semi              | boolean  | ×        | true                                             | Is enable semicolon                                                                                                                                                                                                                                                                          |
+| optional          | boolean  | ×        | true                                             | If this is enabled, it will generate the optional interface, default value is true                                                                                                                                                                                                           |
+| ignoreKeys        | string[] | ×        | []                                               | If you don't want to generate the type of an attribute in a root object, you can pass in the key name of the corresponding attribute.<br /><br />Like this, ignoreKeys: ["firstName", "lastName"]<br /><br />Schema2ts will ignore the two attributes and doesn't generate the type of them. |
+| explain           | string   | ×        |                                                  | Display some comments at the top of the code                                                                                                                                                                                                                                                 |
+| parseErrorMessage | string   | ×        | // Parse schema error, please check your schema. | When parsing schema error, this message will be return                                                                                                                                                                                                                                       |
+
+## Example:
 
 ### Input schema
+
+If you have a schema like this:
 
 ```json
 {
@@ -171,21 +188,6 @@ export interface IArr3 {
   enen4?: any;
 }
 ```
-
-## Options
-
-| key               | type     | required | default                                          | description                                                  |
-| ----------------- | -------- | -------- | ------------------------------------------------ | ------------------------------------------------------------ |
-| preffix           | string   | ×        | I                                                | Interface preffix, if you don't like this, you can give it a empty string |
-| preffixOfEnum     | string   | ×        | T                                                | Enum type preffix, if you don't like this, you can give it a empty string |
-| isGenComment      | boolean  | ×        | false                                            | Whether to automatically generate comments                   |
-| isExport          | boolean  | ×        | true                                            | Whether to export the interfaces and types                   |
-| indent            | number   | ×        | 2                                                | Code indent                                                  |
-| semi              | boolean  | ×        | true                                             | Is enable semicolon                                          |
-| optional          | boolean  | ×        | true                                             | If this is enabled, it will generate the optional interface, default value is true |
-| ignoreKeys        | string[] | ×        | []                                               | If you don't want to generate the type of an attribute in a root object, you can pass in the key name of the corresponding attribute.<br /><br />Like this, ignoreKeys: ["firstName", "lastName"]<br /><br />Schema2ts will ignore the two attributes and doesn't generate the type of them. |
-| explain           | string   | ×        |                                                  | Display some comments at the top of the code                 |
-| parseErrorMessage | string   | ×        | // Parse schema error, please check your schema. | When parsing schema error, this message will be return       |
 
 ## More examples
 
